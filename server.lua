@@ -25,6 +25,7 @@ end
 -- Command Registration
 RegisterCommand('reply', function(source, args, rawCommand)
     local _source = source
+    local playerName = "Unknown"  -- Default player name
     local playerGroup = nil
     local xPlayer = nil
 
@@ -37,32 +38,36 @@ RegisterCommand('reply', function(source, args, rawCommand)
     if Config.Framework == "ESX" then
         xPlayer = Framework.GetPlayerFromId(_source)
         playerGroup = xPlayer.getGroup()
+        playerName = xPlayer.getName()  -- Get player name for ESX
     elseif Config.Framework == "QB" then
         xPlayer = Framework.Functions.GetPlayer(_source)
         if xPlayer.PlayerData.job then
             playerGroup = xPlayer.PlayerData.job.name
         end
+        playerName = xPlayer.PlayerData.charinfo.firstname .. " " .. xPlayer.PlayerData.charinfo.lastname -- Get player name for QBCore
     end
 
-    -- Permission and message sending
+    -- Permission check
     if xPlayer and isGroupAllowed(playerGroup) then
         local targetId = tonumber(args[1])
         table.remove(args, 1)
         local message = table.concat(args, " ")
         if targetId and message then
-            TriggerClientEvent('admin:receiveReply', targetId, message)
+            -- Send the message along with the sender's name
+            TriggerClientEvent('hw_reply:receiveReply', targetId, message, playerName)
         else
             if Config.Framework == "QB" then
                 TriggerClientEvent('QBCore:Notify', _source, 'Invalid usage. /reply [playerId] [message]', 'error')
             else
-                xPlayer.showNotification('Invalid usage. /reply [playerId] [message]') -- Assuming ESX v1 final or lower
+                xPlayer.showNotification('Invalid usage. /reply [playerId] [message]')
             end
         end
     else
         if Config.Framework == "QB" then
             TriggerClientEvent('QBCore:Notify', _source, 'You do not have permission to use this command.', 'error')
         else
-            xPlayer.showNotification('You do not have permission to use this command.') -- Assuming ESX v1 final or lower
+            xPlayer.showNotification('You do not have permission to use this command.')
         end
     end
 end, false)
+
