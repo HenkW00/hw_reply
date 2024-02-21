@@ -2,7 +2,7 @@ fx_version 'cerulean'
 game 'gta5'
 
 author 'HenkW'
-description 'Admin reply script with okokNotify/pNotify integration'
+description 'Admin reply script with okokNotify/hw_notify integration'
 version '1.0.5'
 
 client_scripts {

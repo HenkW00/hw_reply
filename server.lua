@@ -24,8 +24,8 @@ end
 
 -- Notification function based on Config.Notify
 local function sendNotification(source, message, messageType)
-    if Config.Notify == "pNotify" then
-        TriggerClientEvent('pNotify:SendNotification', source, {text = message, type = messageType, layout = "topCenter", timeout = 5000})
+    if Config.Notify == "hw_notify" then
+        TriggerClientEvent('hw_notify:SendNotification', source, {text = message, type = messageType, layout = "topCenter", timeout = 5000})
     elseif Config.Notify == "okokNotify" then
         TriggerClientEvent('okokNotify:Alert', source, "Notification", message, 5000, messageType)
     else
