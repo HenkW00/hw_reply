@@ -2,8 +2,8 @@ fx_version 'cerulean'
 game 'gta5'
 
 author 'HenkW'
-description 'Admin reply script with okokNotify integration'
-version '1.0.4'
+description 'Admin reply script with okokNotify/pNotify integration'
+version '1.0.5'
 
 client_scripts {
     'config.lua',
@@ -18,6 +18,5 @@ server_scripts {
 }
 
 dependency 'es_extended' 
-dependency 'okokNotify'
 
 shared_script '@es_extended/imports.lua'

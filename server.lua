@@ -22,6 +22,21 @@ local function isGroupAllowed(group)
     return false
 end
 
+-- Notification function based on Config.Notify
+local function sendNotification(source, message, messageType)
+    if Config.Notify == "pNotify" then
+        TriggerClientEvent('pNotify:SendNotification', source, {text = message, type = messageType, layout = "topCenter", timeout = 5000})
+    elseif Config.Notify == "okokNotify" then
+        TriggerClientEvent('okokNotify:Alert', source, "Notification", message, 5000, messageType)
+    else
+        -- Default notification for ESX if no valid Config.Notify is set
+        if Framework and Framework.IsPlayerLoaded(source) then
+            local xPlayer = Framework.GetPlayerFromId(source)
+            xPlayer.showNotification(message)
+        end
+    end
+end
+
 -- Command Registration
 RegisterCommand('reply', function(source, args, rawCommand)
     local _source = source
@@ -54,20 +69,11 @@ RegisterCommand('reply', function(source, args, rawCommand)
         local message = table.concat(args, " ")
         if targetId and message then
             -- Send the message along with the sender's name
-            TriggerClientEvent('hw_reply:receiveReply', targetId, message, playerName)
+            TriggerClientEvent('hw_reply:receiveReply', targetId, message, playerName, Config.Notify) -- Updated to pass Config.Notify
         else
-            if Config.Framework == "QB" then
-                TriggerClientEvent('QBCore:Notify', _source, 'Invalid usage. /reply [playerId] [message]', 'error')
-            else
-                xPlayer.showNotification('Invalid usage. /reply [playerId] [message]')
-            end
+            sendNotification(_source, 'Invalid usage. /reply [playerId] [message]', 'error')
         end
     else
-        if Config.Framework == "QB" then
-            TriggerClientEvent('QBCore:Notify', _source, 'You do not have permission to use this command.', 'error')
-        else
-            xPlayer.showNotification('You do not have permission to use this command.')
-        end
+        sendNotification(_source, 'You do not have permission to use this command.', 'error')
     end
 end, false)
-
