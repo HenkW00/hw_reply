@@ -1,5 +1,28 @@
 local Framework = nil
 
+-- Function to send logs to Discord
+local function sendDiscordLog(fromName, toPlayerId, message)
+    local webhookURL = Config.Webhook  -- Use the configurable webhook URL
+    if webhookURL == nil or webhookURL == "" then
+        print("Discord webhook URL is not configured. Please set Config.Webhook.")
+        return
+    end
+    
+    local timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ") 
+    local discordData = {
+        username = "Server Logs",
+        embeds = {{
+            title = "Message Log",
+            description = string.format("**From:** %s\n**To:** %s\n**Message:**\n```\n%s\n```", fromName, GetPlayerName(toPlayerId), message),
+            footer = { text = "Sent at: " .. timestamp },
+            color = 65280 
+        }},
+        avatar_url = "https://example.com/avatar.jpg"
+    }
+    
+    PerformHttpRequest(webhookURL, function(err, text, headers) end, 'POST', json.encode(discordData), { ['Content-Type'] = 'application/json' })
+end
+
 -- Dynamic Framework Initialization
 Citizen.CreateThread(function()
     if Config.Framework == "ESX" then
@@ -70,6 +93,7 @@ RegisterCommand('reply', function(source, args, rawCommand)
         if targetId and message then
             -- Send the message along with the sender's name
             TriggerClientEvent('hw_reply:receiveReply', targetId, message, playerName, Config.Notify) -- Updated to pass Config.Notify
+            sendDiscordLog(playerName, targetId, message)
         else
             sendNotification(_source, 'Invalid usage. /reply [playerId] [message]', 'error')
         end
