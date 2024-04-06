@@ -105,7 +105,7 @@ AddEventHandler('onResourceStart', function(resourceName)
         description = string.format("**%s** has been started.", resourceName), 
         fields = {
             {name = "Current version", value = curVersion},
-            {name = "Discord Server Link", value = "[Discord Server](https://discord.gg/j55z45bC)"}
+            {name = "Discord Server Link", value = "[Discord Server](https://discord.com/invite/buqhWxVYkQ)"}
         },
         footer = {
             text = "HW Scripts | Logs"
