@@ -3,7 +3,7 @@ game 'gta5'
 
 author 'HenkW'
 description 'Admin reply script with okokNotify/hw_notify integration'
-version '1.0.7'
+version '1.0.8'
 
 client_scripts {
     'config.lua',
