@@ -1,9 +1,10 @@
 fx_version 'cerulean'
 game 'gta5'
+lua54 'yes'
 
 author 'HenkW'
-description 'Admin reply script with okokNotify/hw_notify integration'
-version '1.0.9'
+description 'Admin reply script with multiple notify integrations'
+version '1.1.0'
 
 client_scripts {
     'config.lua',
@@ -11,12 +12,15 @@ client_scripts {
 }
 
 server_scripts {
-    '@mysql-async/lib/MySQL.lua', 
     'config.lua',
     'server.lua',
     'version.lua'
 }
 
-dependency 'es_extended' 
+shared_scripts {
+    '@ox_lib/init.lua',
+    '@es_extended/imports.lua',
+    '@mysql-async/lib/MySQL.lua'
+}
 
-shared_script '@es_extended/imports.lua'
+dependency 'es_extended' 
