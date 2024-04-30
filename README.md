@@ -14,9 +14,9 @@ I used okokNotify for the notification, but u can change if need in client.lua
 - OX Notify (if Config.Notify = 'ox')
 
 ## 🌐 Requirements Download links
-- okokNotify: [https://forum.cfx.re/t/okoknotify-standalone-paid/3907758]
-- mythic_notify: []
-- ox_lib: []
+- okokNotify: [https://forum.cfx.re/t/okoknotify-standalone-paid/3907758] --> PAID
+- mythic_notify: [https://github.com/Swqppingg/mythic_notify] --> FREE
+- ox_lib: [https://github.com/overextended/ox_lib] --> FREE
 
 ## ✅ Features
 - Reply to player as staff with /reply
